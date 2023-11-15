@@ -1,40 +1,51 @@
-import Item from "./Item";
+import { ListItem } from "./App";
+import {makeStyles} from 'tss-react'
 
-function List({ title, items, handleCheck }) {
+interface ListProps {
+  title: string;
+  items: Array<ListItem>;
+  handleCheck: (item: ListItem, checked: boolean) => void;
+}
+
+const useStyles = makeStyles()(() => ({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+  }
+}))
+
+function List({ title, items, handleCheck }: ListProps) {
+  const { classes } = useStyles();
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <div className={classes.container}>
+      <h2 style={{ color: "red", textAlign: "center" }}>
+        {title}
+      </h2>
+      <p style={{ textAlign: "center" }}>
+        Number of items: {items.length}{" "}
+      </p>
       <div
         style={{
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           flexDirection: "column",
           border: "solid 2px black",
           padding: "50px",
           borderRadius: "10%",
+          height: 250,
+          width: 250,
+          overflow: 'scroll'
         }}
       >
-        {items.map((item) => {
-          return (
-            <Item
-              itemName={item}
-              key={item}
-              handleCheck={() => handleCheck(item)}
-            />
-          );
-        })}
+        {items.map((item) => (
+          <div key={item.id} style={{ display: 'flex', gap: '8px' }}>
+            <input type="checkbox" onChange={(event) => handleCheck(item, event.target.checked)} />
+            <p>
+              {item.name}
+            </p>
+          </div>
+        ))}
       </div>
-      <h1 style={{ fontSize: "14px", color: "red", textAlign: "center" }}>
-        {title}
-      </h1>
-      <p style={{ textAlign: "center", margin: "0px" }}>
-        Number of items : {items.length}{" "}
-      </p>
     </div>
   );
   // show number of items in the list visually
