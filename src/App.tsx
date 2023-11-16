@@ -27,10 +27,9 @@ function App() {
   const rightCheckedItems = intersection(checkedItems, secondListItems);
 
   function handleCheck(item: ListItem, checked: boolean) {
-    if(checked){
+    if (checked) {
       setChecktedItems((prev) => [...prev, item]);
-    }
-    else {
+    } else {
       setChecktedItems((prev) => prev.filter((prevItem) => prevItem.id !== item.id));
     }
   }

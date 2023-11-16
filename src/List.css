@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    color: darkblue;
+}
+
+.myDiv::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.myDiv::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
+
+.myDiv::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border-radius: 4px;
+}
+
+.myDiv::-webkit-scrollbar-thumb:hover {
+    background-color: #a0a0a0;
+}
+
+.myDiv {
+    overflow: scroll;
+    height: 250px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border: 2px solid orange;
+    border-radius: 5px;
+    padding: 50px;
+    color: orangered;
+}
