@@ -1,40 +1,38 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TransferButtons from "./TransferButtons";
 import List from "./List";
 import {
-  calculateWordCount,
-  debounce,
   intersection,
   not,
 } from "./utils";
+import { ListInput } from "./components/list-input/ListInput";
+import './App.css';
+
+export type ListItem =  { 
+  id: string; 
+  name: string; 
+};
+
+const initialListItems: Array<ListItem> = [
+  { id: "1", name: "item 1" },
+  { id: "2", name: "item 2" },
+]
 
 function App() {
-  const [inputValue, setInputValue] = useState("");
-  const [currWordCount, setCurrWordCount] = useState(0);
-  const [firstListItems, setFirstListItems] = useState([
-    "one",
-    "two",
-    "three",
-    "four",
-  ]);
-  const [secondListItems, setSecondListItems] = useState([]);
-
-  const [checkedItems, setChecktedItems] = useState([]);
+  const [firstListItems, setFirstListItems] = useState<Array<ListItem>>(initialListItems);
+  const [secondListItems, setSecondListItems] = useState<Array<ListItem>>([]);
+  const [checkedItems, setChecktedItems] = useState<Array<ListItem>>([]);
+  
   const leftCheckedItems = intersection(checkedItems, firstListItems);
   const rightCheckedItems = intersection(checkedItems, secondListItems);
 
-  function handleCheck(item) {
-    const currIdx = checkedItems.indexOf(item);
-    const checkedItemsToUpdate = [...checkedItems];
-
-    if (currIdx === -1) {
-      //does not found
-      checkedItemsToUpdate.push(item);
-    } else {
-      checkedItemsToUpdate.splice(currIdx, 1);
+  function handleCheck(item: ListItem, checked: boolean) {
+    if(checked){
+      setChecktedItems((prev) => [...prev, item]);
     }
-
-    setChecktedItems(checkedItemsToUpdate);
+    else {
+      setChecktedItems((prev) => prev.filter((prevItem) => prevItem.id !== item.id));
+    }
   }
 
   function handleLeftMove() {
@@ -49,39 +47,23 @@ function App() {
     setChecktedItems(not(checkedItems, leftCheckedItems));
   }
 
-  function handleInputChange(e) {
-    setInputValue(e.target.value);
+  function handleAddToList(item: string) {
+    setFirstListItems((prev) => [...prev, { name: item, id: crypto.randomUUID()}]);
   }
-
-  function handleAddToList() {
-    setFirstListItems([...firstListItems, inputValue]);
-    setInputValue("");
-  }
-
-  const debouncedCalcWordCount = debounce(
-    (text) => {
-      const wordCount = calculateWordCount(text)
-      setCurrWordCount(wordCount)
-    }, 100)
-
-  useEffect(
-    function () {
-      debouncedCalcWordCount(inputValue)
-    },
-    [inputValue],
-  );
 
   return (
     <>
-      <Title />
-      <div style={{display: "flex", justifyContent: "center", marginBottom: "20px"}}>
-        <input
-          style={{ marginRight: "10px" }}
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-        <span style={{color: 'blue', marginRight: "10px"}}> Current Word Count : {currWordCount}</span>
-        <button onClick={handleAddToList}> Add to list </button>
+      <h1
+        style={{
+          textAlign: "center",
+          marginBottom: "50px",
+          marginTop: "20px",
+        }}
+      >
+        Title
+      </h1>
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+        <ListInput onAddToList={handleAddToList} />
       </div>
       <div
         style={{
@@ -91,7 +73,7 @@ function App() {
           flexDirection: "row",
         }}
       >
-        <List title="list 1" items={firstListItems} handleCheck={handleCheck} />
+        <List title="List 1" items={firstListItems} handleCheck={handleCheck} />
         <Break />
         <div style={{ display: "flex", flexDirection: "column" }}>
           <TransferButtons
@@ -101,7 +83,7 @@ function App() {
         </div>
         <Break />
         <List
-          title="list 2"
+          title="List 2"
           items={secondListItems}
           handleCheck={handleCheck}
         />
@@ -112,21 +94,6 @@ function App() {
 
 function Break() {
   return <div style={{ width: "50px" }} />;
-}
-
-function Title() {
-  return (
-    <h1
-      style={{
-        textAlign: "center",
-        marginBottom: "50px",
-        marginTop: "20px",
-        fontFamily: "sans-serif",
-      }}
-    >
-      Title
-    </h1>
-  );
 }
 
 export default App;
