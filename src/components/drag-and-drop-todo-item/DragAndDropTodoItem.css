@@ -1,0 +1,16 @@
+.item {
+    color: orangered;
+    border: solid 1px orange;
+    border-radius: 16%;
+    padding: 5px;
+}
+
+.item:hover {
+    cursor: pointer;
+}
+
+.last-item {
+    pointer-events: none;
+    cursor: not-allowed;
+    color: white;
+}

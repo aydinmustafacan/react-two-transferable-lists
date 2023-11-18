@@ -1,0 +1,18 @@
+.dragAndDropList {
+    padding: 20px;
+    margin: 20px;
+    border: solid 1px red;
+    border-radius: 10%;
+}
+
+.drop-placeholder {
+    height: 2px;
+    background-color: blue;
+    margin: 4px 0;
+}
+
+.list {
+    border: solid 1px black;
+    width: 100px;
+}
+

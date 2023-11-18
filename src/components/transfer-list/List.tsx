@@ -1,4 +1,4 @@
-import { ListItem } from "./App";
+import { ListItem } from "../../apps/transfer-list/TransferListApp";
 import "./List.css";
 
 interface ListProps {
