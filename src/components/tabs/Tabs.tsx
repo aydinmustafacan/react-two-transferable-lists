@@ -13,6 +13,7 @@ export function Tabs(props : TabsProps) {
       <div className="tabs">
         <TabItem onClick={() => setActiveIdx(0)} title={"Transfer List"} isActive={activeIdx === 0}/>
         <TabItem onClick={() => setActiveIdx(1)} title={"Drag and Drop List"} isActive={activeIdx === 1}/>
+        <TabItem onClick={() => setActiveIdx(2)} title={"Tic Tac Toe"} isActive={activeIdx === 2}/>
       </div>
   )
 }

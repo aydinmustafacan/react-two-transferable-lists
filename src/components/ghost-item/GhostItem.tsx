@@ -9,8 +9,17 @@ export function GhostItem(props: GhostItemProps) {
   const {item, position} = props;
 
   return createPortal(
-    <div style={{ color: 'blue', position: 'fixed', left: position.x, top: position.y, pointerEvents: 'none' }}>
-      {item}
+    <div style={{
+      border: 'solid 2px magenta',
+      borderRadius: '5px',
+      color: 'blue',
+      left: position.x,
+      padding: '3px',
+      pointerEvents: 'none',
+      position: 'fixed',
+      top: position.y
+    }}>
+      <strong>{item}</strong>
     </div>,
     document.body
   );

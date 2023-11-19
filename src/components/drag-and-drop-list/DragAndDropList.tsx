@@ -1,4 +1,4 @@
-import {Fragment, useRef, useState} from "react";
+import {useRef, useState} from "react";
 import "./drag-and-drop-list.css";
 import {DragAndDropTodoItem} from "../drag-and-drop-todo-item/DragAndDropTodoItem";
 import {GhostItem} from "../ghost-item/GhostItem";
@@ -6,7 +6,9 @@ import {GhostItem} from "../ghost-item/GhostItem";
 interface DragAndDropListProps {
   title: string
   listItems: Array<string>
-
+  listId: number
+  setListItems: (listItems: Array<string>) => void;
+  onItemDropped?: (item: string, sourceListId: number, targetListId: number) => void;
 }
 interface Coordinates {
   x: number
@@ -14,18 +16,16 @@ interface Coordinates {
 }
 
 export function DragAndDropList(props: DragAndDropListProps) {
-  const { title, listItems } = props;
+  const { title, listItems: items, setListItems: setItems, listId, onItemDropped } = props;
 
-  const [items, setItems] = useState<Array<string>>([...listItems, '--']);
-  const [dragStartIdx, setDragStartIdx] = useState<number | null>(null); // New state
-  const [droppedItems, setDroppedItems] = useState([]);
+  const [dragStartIdx, setDragStartIdx] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [ghostPosition, setGhostPosition] = useState<Coordinates>({ x: 0, y: 0 });
   const [draggedItem, setDraggedItem] = useState<string | null>(null);
   const [hoverIndex, setHoverIndex] = useState(null);
   const [isOverDraggableArea, setIsOverDraggableArea] = useState(false);
 
-  const droppableRef = useRef(null); // Create a ref
+  const droppableRef = useRef(null);
 
   function handleDragStart(e, id: string) {
     console.log(+id)
@@ -33,7 +33,7 @@ export function DragAndDropList(props: DragAndDropListProps) {
     setDraggedItem(items[+id]);
     setIsDragging(true);
     setGhostPosition({ x: e.clientX, y: e.clientY });
-    e.dataTransfer.setData('text/plain', JSON.stringify({id, name: items[+id]}));
+    e.dataTransfer.setData('text/plain', JSON.stringify({id, name: items[+id], listId}));
 
     const transparentImage = new Image();
     transparentImage.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"; // 1x1 transparent GIF
@@ -57,26 +57,39 @@ export function DragAndDropList(props: DragAndDropListProps) {
 
   function handleDrop(e) {
     const json = e.dataTransfer.getData('text/plain')
-    const {id, name} = JSON.parse(json)
-    console.log("DROP")
-    console.log(id)
-    console.log(name)
-    const itemToMove = name;
+    const {id, name, listId: draggingItemsListId} = JSON.parse(json)
 
-    setDroppedItems([...droppedItems, itemToMove]);
-    if(dragStartIdx < hoverIndex) {
-      console.log(`${id} and dragStartIdx: ${dragStartIdx} and hoverIndex: ${hoverIndex}`)
-      items.splice(+id, 1);
-      items.splice(hoverIndex - 1, 0, itemToMove);
+    if(draggingItemsListId === listId) {
+      handleDropOnSameList(name, id)
     } else {
-      console.log(`working => dragStartIdx: ${dragStartIdx} and hoverIndex: ${hoverIndex}`)
+      handleDropOnDifferentList(name, +draggingItemsListId)
+    }
+  };
+
+  function handleDropOnDifferentList(name: string, sourceId: number) {
+    items.splice(hoverIndex, 0, name);
+    setItems([...items])
+    setIsDragging(false);
+    setHoverIndex(null);
+
+    if(onItemDropped) {
+      if(sourceId === 1) onItemDropped(name, 1, 2);
+      else onItemDropped(name, 2, 1);
+    }
+  }
+
+  function handleDropOnSameList(name: string, id: string) {
+    if(dragStartIdx < hoverIndex) {
       items.splice(+id, 1);
-      items.splice(hoverIndex, 0, itemToMove);
+      items.splice(hoverIndex - 1, 0, name);
+    } else {
+      items.splice(+id, 1);
+      items.splice(hoverIndex, 0, name);
     }
     setItems(items)
     setIsDragging(false);
     setHoverIndex(null);
-  };
+  }
 
   function handleDragLeave() {
     setIsOverDraggableArea(false)
@@ -112,7 +125,9 @@ export function DragAndDropList(props: DragAndDropListProps) {
             onDragOver={(e) => handleDragOver(e, index)}
           >
             {hoverIndex === index && isOverDraggableArea && <div className="drop-placeholder"></div>}
-            <div className={itemClassName(index)}> <DragAndDropTodoItem classFn={(index) => itemClassName(index)} id={index} name={item}/></div>
+            <div className={itemClassName(index)}>
+              <DragAndDropTodoItem classFn={(index) => itemClassName(index)} id={index} name={item}/>
+            </div>
           </div>
         ))}
       </div>

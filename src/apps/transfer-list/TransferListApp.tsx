@@ -59,7 +59,7 @@ function TransferListApp() {
           marginTop: "20px",
         }}
       >
-        Title
+       Transfer List App
       </h1>
       <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
         <ListInput onAddToList={handleAddToList} />
