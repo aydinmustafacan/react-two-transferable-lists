@@ -1,5 +1,5 @@
 import { ListItem } from "./App";
-import {makeStyles} from 'tss-react'
+import "./List.css";
 
 interface ListProps {
   title: string;
@@ -7,36 +7,17 @@ interface ListProps {
   handleCheck: (item: ListItem, checked: boolean) => void;
 }
 
-const useStyles = makeStyles()(() => ({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-  }
-}))
-
 function List({ title, items, handleCheck }: ListProps) {
-  const { classes } = useStyles();
 
   return (
-    <div className={classes.container}>
+    <div className="container">
       <h2 style={{ color: "red", textAlign: "center" }}>
         {title}
       </h2>
       <p style={{ textAlign: "center" }}>
         Number of items: {items.length}{" "}
       </p>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          border: "solid 2px black",
-          padding: "50px",
-          borderRadius: "10%",
-          height: 250,
-          width: 250,
-          overflow: 'scroll'
-        }}
-      >
+      <div className="myDiv">
         {items.map((item) => (
           <div key={item.id} style={{ display: 'flex', gap: '8px' }}>
             <input type="checkbox" onChange={(event) => handleCheck(item, event.target.checked)} />
