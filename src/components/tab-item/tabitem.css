@@ -1,0 +1,15 @@
+.tabitem {
+    border-radius: 10px;
+    cursor: pointer;
+    border: solid 1px purple;
+    padding : 10px;
+    margin : 5px;
+}
+
+.tabitem:hover {
+    background-color: #f6ad55;
+}
+
+.tabitem.active {
+    color: blue;
+}

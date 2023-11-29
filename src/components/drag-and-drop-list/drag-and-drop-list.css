@@ -1,0 +1,39 @@
+.dragAndDropList {
+    padding: 20px;
+    margin: 20px;
+    border: solid 1px red;
+    border-radius: 10%;
+    width: 150px;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.dragAndDropList::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.dragAndDropList::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
+
+.dragAndDropList::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border-radius: 4px;
+}
+
+.dragAndDropList::-webkit-scrollbar-thumb:hover {
+    background-color: #a0a0a0;
+}
+
+.drop-placeholder {
+    height: 2px;
+    background-color: blue;
+    margin: 4px 0;
+}
+
+.list {
+    border: solid 1px black;
+    width: 100px;
+}
+
