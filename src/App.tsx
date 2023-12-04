@@ -11,6 +11,8 @@ const tabComponents: Record<number, React.FC> = {
   0: TransferListApp,
   1: DragAndDropApp,
   2: TicTacToeApp,
+  3: TicTacToeApp,
+  4: TicTacToeApp,
 };
 
 

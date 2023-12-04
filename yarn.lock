@@ -2735,6 +2735,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react.aydinmustafa.com@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "react.aydinmustafa.com@workspace:."
+  dependencies:
+    "@types/react": "npm:^18.2.33"
+    "@types/react-dom": "npm:^18.2.14"
+    "@typescript-eslint/eslint-plugin": "npm:^6.9.1"
+    "@typescript-eslint/parser": "npm:^6.9.1"
+    "@vitejs/plugin-react-swc": "npm:^3.4.1"
+    eslint: "npm:^8.52.0"
+    eslint-plugin-react: "npm:^7.33.2"
+    eslint-plugin-react-hooks: "npm:^4.6.0"
+    eslint-plugin-react-refresh: "npm:^0.4.4"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    typescript: "npm:^5.2.2"
+    vite: "npm:^4.5.0"
+  languageName: unknown
+  linkType: soft
+
 "react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
@@ -2879,26 +2899,6 @@ __metadata:
   checksum: 7e3c8b2e88a1841c9671094bbaeebd94448111dd90a81a1f606f3f67708a6ec57763b3b47f06da09fc6054193e0e6709e77325415dc8422b04497a8070fa02d4
   languageName: node
   linkType: hard
-
-"sandbox@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "sandbox@workspace:."
-  dependencies:
-    "@types/react": "npm:^18.2.33"
-    "@types/react-dom": "npm:^18.2.14"
-    "@typescript-eslint/eslint-plugin": "npm:^6.9.1"
-    "@typescript-eslint/parser": "npm:^6.9.1"
-    "@vitejs/plugin-react-swc": "npm:^3.4.1"
-    eslint: "npm:^8.52.0"
-    eslint-plugin-react: "npm:^7.33.2"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
-    eslint-plugin-react-refresh: "npm:^0.4.4"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
-    typescript: "npm:^5.2.2"
-    vite: "npm:^4.5.0"
-  languageName: unknown
-  linkType: soft
 
 "scheduler@npm:^0.23.0":
   version: 0.23.0
