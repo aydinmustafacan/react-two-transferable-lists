@@ -107,7 +107,7 @@ export function DragAndDropList(props: DragAndDropListProps) {
   }
 
   return (
-    <div className={"dragAndDropList"}>
+    <div className={'dragAndDropList'}>
       <h1>{title}</h1>
       <div ref={droppableRef}
            className='list'
